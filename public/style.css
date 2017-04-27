@@ -1,0 +1,12 @@
+body{
+    background-image: url('back.jpg');
+}
+
+.jumbotron p{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.jumbotron h2{
+    margin-left: 20px;
+}

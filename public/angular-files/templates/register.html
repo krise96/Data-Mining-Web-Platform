@@ -1,0 +1,74 @@
+<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-5">
+			<form class="form-horizontal" role="form">
+                
+                <div class="form-group">
+					 
+					<label class="col-sm-2 control-label">
+						Ім'я
+					</label>
+					<div class="col-sm-10">
+						<input class="form-control" ng-model="register.name"/>
+					</div>
+				</div>
+                <div class="form-group">
+					 
+					<label class="col-sm-2 control-label">
+						Прізвище
+					</label>
+					<div class="col-sm-10">
+						<input class="form-control"  ng-model="register.secondName"/>
+					</div>
+				</div>
+                <div class="form-group">
+					 
+					<label for="inputEmail3" class="col-sm-2 control-label">
+						Email
+					</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3"  ng-model="register.email"/>
+					</div>
+				</div>
+                
+				<div class="form-group">
+					 
+					<label for="inputPassword3" class="col-sm-2 control-label">
+						Password
+					</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="inputPassword3"  ng-model="register.password"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+					
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						 
+						<button type="submit" class="btn btn-primary" ng-click="register.register()">
+							Зареєструватись
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-5">
+			<div class="jumbotron">
+				<h2>
+					Уже реєструвались у системі раніше?
+				</h2>
+				<p>
+					Тоді скоріш авторизовуйтесь та продовжуйте роботу у системі Data Mining Webplatform
+				</p>
+				<p>
+					<a class="btn btn-primary btn-large" ng-link="['Login']">Увійти</a>
+				</p>
+			</div>
+		</div>
+		<div class="col-md-1">
+		</div>
+	</div>

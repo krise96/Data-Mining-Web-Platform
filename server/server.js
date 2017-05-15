@@ -2,10 +2,14 @@ const express = require('express');
 const path = require('path');
 const open = require('open');
 const bodyParser = require('body-parser');
+const logger = require('morgan');
+
+require('./db/config');
 
 const port = Number(process.env.PORT || 8000);
 const app = express();
 
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../public')));
 

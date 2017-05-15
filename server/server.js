@@ -5,6 +5,11 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 
 require('./db/config');
+require('./db/models/user');
+require('./db/models/role');
+require('./db/models/file');
+require('./db/models/task');
+require('./db/models/taskList');
 
 const port = Number(process.env.PORT || 8000);
 const app = express();

@@ -4,10 +4,10 @@ const Schema = mongoose.Schema,
       ObjectId = Schema.Types.ObjectId;
 
 const UserSchema = new Schema({
-  name: {type: String, required: true},
-  email: {type: String, unique: true, required:true},
-  passwordHash: {type: String, required: true},
-  role: {type: String, required: true, ref: 'Role'},
+  username: {type: String, required: true},
+  email: {type: String, unique: true, required: true},
+  hash: {type: String, required: true},
+  admin: {type: Boolean},
   taskList: [{type: ObjectId, ref: 'TaskList'}],
   files: [{type: ObjectId, ref: 'File'}]
 }, {

@@ -9,9 +9,11 @@
   "author": "Mykola Krys, Komar Kateryna, Babiy Ivan",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.1",
     "colors": "^1.1.2",
     "express": "^4.15.2",
+    "jsonwebtoken": "^7.4.0",
     "mongoose": "^4.9.9",
     "morgan": "^1.8.1",
     "open": "0.0.5"

@@ -4,11 +4,18 @@
     function RegisterController($scope, $http){
        var vm = this;
        vm.register = function () {
-           console.log(vm.name);
-           console.log(vm.secondName);
-           console.log(vm.email);
-           console.log(vm.password);
-           //$http......(Якщо ти все таки вирішиш попробувати звідси надіслати)
+           let user = {
+               "email":vm.email, 
+               "username": vm.userName, 
+               "password": vm.password
+           }
+           console.log(user);
+           $http.post("/api/register", user).success(function(message) {
+                console.log(message);
+            })
+            .error(function (message) {
+                console.log(message);
+            })
        }
     };
     

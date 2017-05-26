@@ -1,15 +1,25 @@
-<div>
+<div ng-controller="menuController">
     <nav class="navbar navbar-inverse">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">DM Web Platform</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Page 1</a></li>
-      <li><a href="#">Page 2</a></li>
-      <li><a href="#">Page 3</a></li>
-    </ul>
+      <div class="navbar-header">
+          <a class="navbar-brand" href="#">DM Web Platform</a>
+      </div>
+      <ul class="nav navbar-nav">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Page 1</a></li>
+          <li><a href="#">Page 2</a></li>
+          <li><a href="#">Page 3</a></li>
+      </ul>
+      <div>
+          <div ng-show="dataFactory.authenticated">
+              {{dataFactory.email}}
+              <br>
+              <a ng-click="logout()">Вийти</a>
+          </div>
+      
+        <div ng-show="!dataFactory.authenticated">
+            <a ng-link="['Login']"> Залогінся </a> 
+        </div>
   </div>
 </nav>
     <ng-outlet></ng-outlet>

@@ -1,11 +1,22 @@
 (function() {
     var module=angular.module('MainModule');
     
-class rootComponentController {
-    constructor() {}
+function rootComponentController() {
+    
 }
 
-rootComponentController.$inject = [];
+     module.controller('menuController', function($scope, dataFactory, $cookies){
+           $scope.dataFactory = dataFactory;
+           
+           $scope.logout = function(){
+               $cookies.remove('token');
+               $cookies.remove('email');
+               dataFactory.token = null;
+               dataFactory.email = null;
+               dataFactory.authenticated = false;
+           }
+           
+     });
 
      module.component('rootElement', {
             controller: rootComponentController,
@@ -13,16 +24,21 @@ rootComponentController.$inject = [];
             $routeConfig: [{
                 path: '/',
                 name: 'Home',
-                component: 'home',
+                component: 'home'
             },{
                 path: '/register',
                 name: 'Register',
-                component: 'register',
+                component: 'register'
             },
             {
                 path: '/login',
                 name: 'Login',
-                component: 'login',
+                component: 'login'
+            },
+            {
+                path: '/userbord',
+                name: 'Userbord',
+                component: 'userbord'
             },
             {
                 path: '/**',

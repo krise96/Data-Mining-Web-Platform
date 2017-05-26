@@ -1,28 +1,30 @@
 (function() {
     var module=angular.module('MainModule');
     
-class rootComponentController {
-    constructor() {}
+function rootComponentController() {
+    
 }
-
-rootComponentController.$inject = [];
-
      module.component('rootElement', {
             controller: rootComponentController,
             templateUrl: './angular-files/templates/MainPage.html',
             $routeConfig: [{
                 path: '/',
                 name: 'Home',
-                component: 'home',
+                component: 'home'
             },{
                 path: '/register',
                 name: 'Register',
-                component: 'register',
+                component: 'register'
             },
             {
                 path: '/login',
                 name: 'Login',
-                component: 'login',
+                component: 'login'
+            },
+            {
+                path: '/userbord',
+                name: 'Userbord',
+                component: 'userbord'
             },
             {
                 path: '/**',

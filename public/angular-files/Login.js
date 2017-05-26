@@ -1,11 +1,22 @@
 (function() {
     var module=angular.module('MainModule');
     
-    function LoginController($scope, $http){
+    function LoginController($scope, $http, $cookies, dataFactory){
        var vm = this;
        vm.login = function () {
-           console.log(vm.email);
-           console.log(vm.password);
+           let user = {
+               "email": vm.email,
+               "password": vm.password
+           }
+           $http.post('/api/authenticate', user)
+           .success(function(message) {
+                $cookies.put('token', message.token);
+                dataFactory.token = message.token;
+                dataFactory.authenticated = true;
+            })
+            .error(function (message) { 
+                console.log(message);
+            });
        }
     };
     

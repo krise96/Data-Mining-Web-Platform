@@ -1,3 +1,4 @@
+"use strict";
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const bcrypt = require('bcryptjs');
@@ -11,13 +12,14 @@ exports.register = (req, res) => {
     res.status(400).json({'message': 'email, username, password are required'});
     return false;
   }
-
+  
   let user = new User({
     email: req.body.email,
     username: req.body.username,
     admin: req.body.admin || false,
     hash: bcrypt.hashSync(req.body.password, 10)
   });
+  
   
   user.save()
     .then(user => {

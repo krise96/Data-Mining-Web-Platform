@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 const secret = require('../../auth/config').secret;
 
 mongoose.Promise = global.Promise;
@@ -26,6 +27,7 @@ exports.register = (req, res) => {
 
         user.save()
           .then(user => {
+            fs.mkdirSync(`userfiles/${req.body.email}`);
             res.status(201).json({'message': 'user created'});
           })
           .catch(err => {
@@ -34,7 +36,7 @@ exports.register = (req, res) => {
       }
 
       if(user) {
-        res.status(400).json({'message': 'user already exists'});
+        throw Error('user already exists');
       }
     })
     .catch(err => {

@@ -3,7 +3,7 @@
     
 	module.value('$routerRootComponent', 'rootElement');
     
-    module.run(function(dataFactory, $cookies){
+    module.run(function(dataFactory, $cookies, $rootScope){
         dataFactory.token = $cookies.get('token');
         dataFactory.email = $cookies.get('email');
         if(dataFactory.token != null){
@@ -12,7 +12,14 @@
             
             dataFactory.authenticated = true;
         }
-        
+        // $rootScope.$on("$locationChangeStart", function(event, next, current) { 
+        //     console.log(next);
+        //     console.log(current);
+        //      if(next == 'http://localhost:8000/#/login'){
+        //          console.log('HER');
+        //           event.preventDefault(); 
+        //      };
+        // })();
     });
 	
 })();

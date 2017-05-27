@@ -1,7 +1,14 @@
 const Router = require('express').Router();
-const Controller = require('./controllers');
+const AuthController = require('../controllers/auth/controllers');
+const FilesController = require('../controllers/files/controllers');
 
-Router.post('/register', Controller.register);
-Router.post('/authenticate', Controller.authenticate);
+const checkAuth = require('./checkAuthMidlleware').checkAuth;
+
+Router.post('/register', AuthController.register);
+Router.post('/authenticate', AuthController.authenticate);
+
+Router.use(checkAuth);
+
+Router.get('/files', FilesController.getAllFiles);
 
 module.exports = Router;

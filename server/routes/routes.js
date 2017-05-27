@@ -10,5 +10,7 @@ Router.post('/authenticate', AuthController.authenticate);
 Router.use(checkAuth);
 
 Router.get('/files', FilesController.getAllFiles);
+Router.post('/removeFile', FilesController.removeFile);
+Router.post('/uploadFile', FilesController.uploadFile);
 
 module.exports = Router;

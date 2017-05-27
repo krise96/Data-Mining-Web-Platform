@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const secret = require('../auth/config').secret;
+const secret = require('../../auth/config').secret;
 
 mongoose.Promise = global.Promise;
 
@@ -12,20 +12,35 @@ exports.register = (req, res) => {
     return false;
   }
 
-  let user = new User({
-    email: req.body.email,
-    username: req.body.username,
-    admin: req.body.admin || false,
-    hash: bcrypt.hashSync(req.body.password, 10)
-  });
-  
-  user.save()
+  User.findOne({email: req.body.email})
     .then(user => {
-      res.status(201).json({'message': 'user created'});
+      if(!user) {
+
+        let user = new User({
+          email: req.body.email,
+          username: req.body.username,
+          admin: req.body.admin || false,
+          hash: bcrypt.hashSync(req.body.password, 10)
+        });
+
+        user.save()
+          .then(user => {
+            res.status(201).json({'message': 'user created'});
+          })
+          .catch(err => {
+            res.status(400).json({'message': `${err.name}: ${err.message}`});
+          })
+      }
+
+      if(user) {
+        res.status(400).json({'message': 'user already exists'});
+      }
     })
     .catch(err => {
       res.status(400).json({'message': `${err.name}: ${err.message}`});
-    })
+    });
+  
+  
 };
 
 exports.authenticate = (req, res) => {
@@ -38,7 +53,7 @@ exports.authenticate = (req, res) => {
               //expires in 24 hours
               expiresIn: 60 * 60 * 24
             });
-            res.status(200).json({'message': 'user is authorized', token});
+            res.status(200).json({'message': 'user is authorized', token, isAdmin: user.admin});
           } else {
             throw Error('authentication failed: wrong password');
           }

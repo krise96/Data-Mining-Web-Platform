@@ -1,2 +1,2 @@
 This folder should be empty in repo.
-It contains downloaded data files of each user.
+It contains uploaded data files of each user.

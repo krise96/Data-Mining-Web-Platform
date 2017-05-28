@@ -4,7 +4,7 @@ const User = mongoose.model('User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-const secret = require('../../auth/config').secret;
+const secret = require('../auth/config').secret;
 
 mongoose.Promise = global.Promise;
 
@@ -41,6 +41,7 @@ exports.register = (req, res) => {
     })
     .catch(err => {
       res.status(400).json({'message': `${err.name}: ${err.message}`});
+      throw Error(err);
     });
 };
 
@@ -51,8 +52,8 @@ exports.authenticate = (req, res) => {
         .then(authorized => {
           if(authorized) {
             const token = jwt.sign(user, secret, {
-              //expires in 24 hours
-              expiresIn: 60 * 60 * 24
+              //expires in 1 year
+              expiresIn: 60 * 60 * 8760
             });
             res.status(200).json({'message': 'user is authorized', token, isAdmin: user.admin});
           } else {
@@ -61,9 +62,11 @@ exports.authenticate = (req, res) => {
         })
         .catch(err => {
           res.status(401).json({'message': `${err.name}: ${err.message}`});
+          throw Error(err);
         });
     })
     .catch(err => {
           res.status(401).json({'message': `${err.name}: ${err.message}`});
+          throw Error(err);
     });
-}; 
+};

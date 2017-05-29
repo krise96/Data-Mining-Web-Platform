@@ -6,7 +6,9 @@ const Schema = mongoose.Schema,
 const TaskSchema = new Schema({
   title: {type: String, required: true},
   description: {type: String, required: true},
-  userList: [{type: ObjectId, ref: 'User'}]
+  userList: [{type: ObjectId, ref: 'User'}],
+  createdBy: {type: ObjectId, required: true, ref: 'User'},
+  isClosed: {type: Boolean, required: true}
 }, {
   collection: 'tasks'
 });

@@ -18,5 +18,8 @@ Router.post('/removeFile', FilesController.removeFile);
 Router.post('/uploadFile', FilesController.uploadFile);
 
 Router.post('/createTask', TaskController.createTask);
+Router.post('/closeTask', TaskController.closeTask);
+Router.get('/allTasks', TaskController.getAllTasks);
+Router.get('/activeTasks', TaskController.getActiveTasks);
 
 module.exports = Router;

@@ -6,7 +6,7 @@ const Schema = mongoose.Schema,
 const FileSchema = new Schema({
   user: {type: ObjectId},
   fileName: {type: String, required: true},
-  taskId : {type: ObjectId},
+  taskId : {type: ObjectId, required: true},
   score: {type: Number}
 }, {
   collection: 'files'

@@ -46,7 +46,7 @@ exports.register = (req, res) => {
 };
 
 exports.authenticate = (req, res) => {
-  User.findOne({email: req.body.email})
+  User.findOne({email: req.body.email}).populate({path: 'TaskList', populate: {path: 'Task'}}).populate({path: 'File'}).exec()
     .then(user => {
       bcrypt.compare(req.body.password, user.hash)
         .then(authorized => {
@@ -55,7 +55,7 @@ exports.authenticate = (req, res) => {
               //expires in 1 year
               expiresIn: 60 * 60 * 8760
             });
-            res.status(200).json({'message': 'user is authorized', token, isAdmin: user.admin});
+            res.status(200).json({'message': 'user is authorized', user, token, isAdmin: user.admin});
           } else {
             throw Error('authentication failed: wrong password');
           }

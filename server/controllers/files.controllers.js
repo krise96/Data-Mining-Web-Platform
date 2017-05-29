@@ -1,6 +1,7 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const File = mongoose.model('File');
 const uploadFile = require('../filesStorage/config');
 
 exports.getAllFiles = (req, res) => {
@@ -14,7 +15,7 @@ exports.removeFile = (req, res) => {
   const filename = req.body.filename;
   try {
     fs.unlinkSync(`userfiles/${user.email}/${filename}`);
-    res.status(200).json({'message': 'successfuly deleted files'});
+    res.status(200).json({'message': 'successfully deleted files'});
   } catch (err) {
     res.status(400).json({'message': `${err.name}: ${err.message}`});
     throw Error(err);
@@ -22,7 +23,9 @@ exports.removeFile = (req, res) => {
 };
 
 exports.uploadFile = (req, res) => {
+  const user = req.decode._doc;
   uploadFile(req, res, err => {
+    const fileName = req.file.originalname.split('.')[0];
     const extension = req.file.originalname.split('.')[1];
     if(extension !== 'csv') {
       res.status(400).json({'message': `File extension error: use .csv extension`});
@@ -32,6 +35,22 @@ exports.uploadFile = (req, res) => {
       res.status(400).json({'message': `${err.name}: ${err.message}`});
       throw Error(err);
     }
-    res.status(200).json({'message': 'Successfuly uploaded file'});
-  })
+
+    res.status(200).json({'message': 'Successfully uploaded file'});
+  //   console.log(req);
+  //   const file = new File({
+  //     user: user._id,
+  //     fileName,
+  //     taskId: req.body.taskId
+  //   });
+
+  //   file.save()
+  //     .then(file => {
+  //       res.status(200).json({'message': 'Successfully uploaded file'});
+  //     })
+  //     .catch(err => {
+  //       res.status(400).json({'message': `${err.name}: ${err.message}`});
+  //       throw Error(err);
+  //     });
+  // });
 }

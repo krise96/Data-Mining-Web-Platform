@@ -21,5 +21,6 @@ Router.post('/createTask', TaskController.createTask);
 Router.post('/closeTask', TaskController.closeTask);
 Router.get('/allTasks', TaskController.getAllTasks);
 Router.get('/activeTasks', TaskController.getActiveTasks);
+Router.post('/getTask', TaskController.getTask);
 
 module.exports = Router;

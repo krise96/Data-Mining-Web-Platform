@@ -52,5 +52,5 @@ exports.uploadFile = (req, res) => {
   //       res.status(400).json({'message': `${err.name}: ${err.message}`});
   //       throw Error(err);
   //     });
-  // });
+  })
 }

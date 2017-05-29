@@ -75,3 +75,17 @@ exports.getActiveTasks = (req, res) => {
       throw Error(err);
     });
 };
+
+exports.getTask = (req, res) => {
+  if(!req.body.taskId) {
+    res.status(403).json({'message': 'no taskId in request'});
+  }
+  Tasks.findOne({_id: req.body.taskId})
+    .then(task => {
+      res.status(200).json({'message': task});
+    })
+    .catch(err => {
+      res.status(400).json({'message': `${err.name}: ${err.message}`});
+      throw Error(err);
+    });
+}

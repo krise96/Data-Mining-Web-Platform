@@ -41,6 +41,11 @@ function rootComponentController() {
                 component: 'userbord'
             },
             {
+                path: '/addtask',
+                name: 'Addtask',
+                component: 'addtask'
+            },
+            {
                 path: '/**',
                 name: 'NotFound',
                 component: 'notFound'

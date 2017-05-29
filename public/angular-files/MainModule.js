@@ -6,6 +6,7 @@
     module.run(function(dataFactory, $cookies, $rootScope){
         dataFactory.token = $cookies.get('token');
         dataFactory.email = $cookies.get('email');
+        dataFactory.isAdmin = $cookies.get('isAdmin');
         if(dataFactory.token != null){
             //ТУТ ТІПА МАЄ БУТИ ЗАПИТ НА ПЕРЕВІРКУ АКТУАЛЬНОСТІ ТОГО ТОКЕНА
             

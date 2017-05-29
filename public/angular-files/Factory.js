@@ -5,6 +5,7 @@
         return{
             token: null,
             authenticated: false,
+            isAdmin: false,
             email:  null
         }
     }

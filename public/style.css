@@ -10,3 +10,21 @@ body{
 .jumbotron h2{
     margin-left: 20px;
 }
+.adminPanel{
+    background: darkred;
+    color: white;
+}
+.adminPanel h1{
+    border-bottom: 1px solid white;
+    padding: 0;
+    margin: 0;
+
+}
+.adminPanel input{
+    color: black;   
+}
+.adminPanel textarea{
+    color: black;  
+    width: 500px;
+    height: 500px;
+}

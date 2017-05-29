@@ -10,8 +10,11 @@
            }
            $http.post('/api/authenticate', user)
            .success(function(message) {
+                console.log(message.isAdmin);
                 $cookies.put('token', message.token);
                 $cookies.put('email', user.email);
+                $cookies.put('isAdmin', message.isAdmin);
+                dataFactory.isAdmin = message.isAdmin;
                 dataFactory.token = message.token;
                 dataFactory.authenticated = true;
                 dataFactory.email = user.email; 

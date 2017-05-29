@@ -36,21 +36,26 @@ exports.uploadFile = (req, res) => {
       throw Error(err);
     }
 
-    res.status(200).json({'message': 'Successfully uploaded file'});
-  //   console.log(req);
-  //   const file = new File({
-  //     user: user._id,
-  //     fileName,
-  //     taskId: req.body.taskId
-  //   });
+    // res.status(200).json({'message': 'Successfully uploaded file'});
+    
+    //taskId might be not in headers
+    //change in future
+    const file = new File({
+      user: user._id,
+      fileName,
+      taskId: req.headers.taskid
+    });
 
-  //   file.save()
-  //     .then(file => {
-  //       res.status(200).json({'message': 'Successfully uploaded file'});
-  //     })
-  //     .catch(err => {
-  //       res.status(400).json({'message': `${err.name}: ${err.message}`});
-  //       throw Error(err);
-  //     });
+    file.save()
+      .then(file => {
+        return User.update({_id: user._id}, {$push: {files: file._id}});
+      })
+      .then(() => {
+        res.status(200).json({'message': 'Successfully uploaded file'});        
+      })
+      .catch(err => {
+        res.status(400).json({'message': `${err.name}: ${err.message}`});
+        throw Error(err);
+      });
   })
 }

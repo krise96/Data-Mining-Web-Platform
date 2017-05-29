@@ -5,10 +5,7 @@ const storage = multer.diskStorage({
     callback(null, `userfiles/${req.decode._doc.email}`);
   },
   filename: (req, file, callback) => {
-    let date = new Date();
-    //TODO: add task name to file name
-    date = `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}.${date.getMilliseconds()}`;
-    callback(null, `${date}-${file.originalname}`);
+    callback(null, `${file.originalname}`);
   }
 });
 

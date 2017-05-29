@@ -46,7 +46,8 @@ exports.register = (req, res) => {
 };
 
 exports.authenticate = (req, res) => {
-  User.findOne({email: req.body.email}).populate({path: 'TaskList', populate: {path: 'Task'}}).populate({path: 'File'}).exec()
+  //later add population -> populate({path: 'TaskList', populate: {path: 'Task'}}).
+  User.findOne({email: req.body.email}).populate({path: 'File'}).exec()
     .then(user => {
       bcrypt.compare(req.body.password, user.hash)
         .then(authorized => {

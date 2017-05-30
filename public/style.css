@@ -28,3 +28,9 @@ body{
     width: 500px;
     height: 500px;
 }
+.dashbordBlock{
+    background-color: black;
+}
+.dashbordBlock p, h3{
+    color: white;
+}

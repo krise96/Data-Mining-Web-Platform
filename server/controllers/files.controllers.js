@@ -2,6 +2,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const File = mongoose.model('File');
+const Task = mongoose.model('Task');
+const TaskList = mongoose.model('TaskList');
 const uploadFile = require('../filesStorage/config');
 
 exports.getAllFiles = (req, res) => {
@@ -35,8 +37,6 @@ exports.uploadFile = (req, res) => {
       res.status(400).json({'message': `${err.name}: ${err.message}`});
       throw Error(err);
     }
-
-    // res.status(200).json({'message': 'Successfully uploaded file'});
     
     //taskId might be not in headers
     //change in future
@@ -48,10 +48,27 @@ exports.uploadFile = (req, res) => {
 
     file.save()
       .then(file => {
-        return User.update({_id: user._id}, {$push: {files: file._id}});
+        if(req.isResultFile) {
+          return Task.update({_id: req.task._id}, {$set: {resultFile: file._id}});
+        }
+        User.update({_id: user._id}, {$push: {files: file._id}})
+          .then(() => {
+            return Task.update({_id: req.headers.taskid}, {$push: {files: file._id}});
+          })
+          .then(() => {
+            return TaskList.update({user: user._id}, {$push: {tasks: req.headers.taskid}});
+          })
+          .catch(err => {
+            res.status(400).json({'message': `${err.name}: ${err.message}`});
+            throw Error(err);
+          });
       })
       .then(() => {
-        res.status(200).json({'message': 'Successfully uploaded file'});        
+        if(req.isResultFile) {
+          res.status(200).json({'message': `${req.task.title} successfully created`, taskId: req.task._id});
+        } else {
+          res.status(200).json({'message': 'Successfully uploaded file'});                
+        }
       })
       .catch(err => {
         res.status(400).json({'message': `${err.name}: ${err.message}`});

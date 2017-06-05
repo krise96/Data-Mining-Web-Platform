@@ -8,7 +8,9 @@ const TaskSchema = new Schema({
   description: {type: String, required: true},
   userList: [{type: ObjectId, ref: 'User'}],
   createdBy: {type: ObjectId, required: true, ref: 'User'},
-  isClosed: {type: Boolean, required: true}
+  isClosed: {type: Boolean, required: true},
+  resultFile: {type: ObjectId},
+  files: [{type: ObjectId, ref: 'File'}]
 }, {
   collection: 'tasks'
 });

@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const Tasks = mongoose.model('Task');
 const User = mongoose.model('User');
+const TaskList = mongoose.model('TaskList');
+const uploadFile = require('./files.controllers').uploadFile;
 
 exports.createTask = (req, res) => {
   const user = req.decode._doc;
 
-  if(!req.body.title || !req.body.description) {
+  if(!req.headers.title || !req.headers.description) {
     res.status(400).json({'message': 'title, description are required'});
     return false;
   }
@@ -16,15 +18,17 @@ exports.createTask = (req, res) => {
   }
   
   const task = new Tasks({
-    title: req.body.title,
-    description: req.body.description,
+    title: req.headers.title,
+    description: req.headers.description,
     createdBy: user._id,
     isClosed: false
   });
 
   task.save()
     .then(task => {
-      res.status(200).json({'message': `${task.title} successfully created`, taskId: task._id});
+      req.isResultFile = true;
+      req.task = task;
+      uploadFile(req, res);
     })
     .catch(err => {
       res.status(400).json({'message': `${err.name}: ${err.message}`});
@@ -83,6 +87,18 @@ exports.getTask = (req, res) => {
   Tasks.findOne({_id: req.body.taskId})
     .then(task => {
       res.status(200).json({'message': task});
+    })
+    .catch(err => {
+      res.status(400).json({'message': `${err.name}: ${err.message}`});
+      throw Error(err);
+    });
+};
+
+exports.getUsersTasks = (req, res) => {
+  const user = req.decode._doc;
+  TaskList.findOne({user: user._id}).populate({path: 'tasks'}).exec()
+    .then(tasks => {
+      res.status(200).json({'message': tasks});
     })
     .catch(err => {
       res.status(400).json({'message': `${err.name}: ${err.message}`});

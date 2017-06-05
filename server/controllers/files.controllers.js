@@ -2,6 +2,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const File = mongoose.model('File');
+const Task = mongoose.model('Task');
+const TaskList = mongoose.model('TaskList');
 const uploadFile = require('../filesStorage/config');
 
 exports.getAllFiles = (req, res) => {
@@ -35,22 +37,42 @@ exports.uploadFile = (req, res) => {
       res.status(400).json({'message': `${err.name}: ${err.message}`});
       throw Error(err);
     }
+    
+    //taskId might be not in headers
+    //change in future
+    const file = new File({
+      user: user._id,
+      fileName,
+      taskId: req.headers.taskid
+    });
 
-    res.status(200).json({'message': 'Successfully uploaded file'});
-  //   console.log(req);
-  //   const file = new File({
-  //     user: user._id,
-  //     fileName,
-  //     taskId: req.body.taskId
-  //   });
-
-  //   file.save()
-  //     .then(file => {
-  //       res.status(200).json({'message': 'Successfully uploaded file'});
-  //     })
-  //     .catch(err => {
-  //       res.status(400).json({'message': `${err.name}: ${err.message}`});
-  //       throw Error(err);
-  //     });
+    file.save()
+      .then(file => {
+        if(req.isResultFile) {
+          return Task.update({_id: req.task._id}, {$set: {resultFile: file._id}});
+        }
+        User.update({_id: user._id}, {$push: {files: file._id}})
+          .then(() => {
+            return Task.update({_id: req.headers.taskid}, {$push: {files: file._id}});
+          })
+          .then(() => {
+            return TaskList.update({user: user._id}, {$push: {tasks: req.headers.taskid}});
+          })
+          .catch(err => {
+            res.status(400).json({'message': `${err.name}: ${err.message}`});
+            throw Error(err);
+          });
+      })
+      .then(() => {
+        if(req.isResultFile) {
+          res.status(200).json({'message': `${req.task.title} successfully created`, taskId: req.task._id});
+        } else {
+          res.status(200).json({'message': 'Successfully uploaded file'});                
+        }
+      })
+      .catch(err => {
+        res.status(400).json({'message': `${err.name}: ${err.message}`});
+        throw Error(err);
+      });
   })
 }

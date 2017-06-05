@@ -4,6 +4,7 @@ const User = mongoose.model('User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const createTaskList = require('./taskList.controllers').createTaskList;
 const secret = require('../auth/config').secret;
 
 mongoose.Promise = global.Promise;
@@ -28,6 +29,12 @@ exports.register = (req, res) => {
         user.save()
           .then(user => {
             fs.mkdirSync(`userfiles/${req.body.email}`);
+            createTaskList(user)
+              .then(taskList => {
+                return User.update({_id: user._id}, {$push: {taskList: taskList._id}});
+              });
+          })
+          .then(() => {
             res.status(201).json({'message': 'user created'});
           })
           .catch(err => {
@@ -46,7 +53,7 @@ exports.register = (req, res) => {
 };
 
 exports.authenticate = (req, res) => {
-  User.findOne({email: req.body.email}).populate({path: 'TaskList', populate: {path: 'Task'}}).populate({path: 'File'}).exec()
+  User.findOne({email: req.body.email})
     .then(user => {
       bcrypt.compare(req.body.password, user.hash)
         .then(authorized => {

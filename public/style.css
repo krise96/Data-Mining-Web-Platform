@@ -30,7 +30,11 @@ body{
 }
 .dashbordBlock{
     background-color: black;
+    margin-top: 10px;
 }
-.dashbordBlock p, h3{
+.dashbordBlock p{
+    color: white;
+}
+.dashbordBlock h3{
     color: white;
 }

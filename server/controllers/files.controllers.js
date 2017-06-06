@@ -27,8 +27,8 @@ exports.removeFile = (req, res) => {
 exports.uploadFile = (req, res) => {
   const user = req.decode._doc;
   uploadFile(req, res, err => {
-    const fileName = req.file.originalname.split('.')[0];
-    const extension = req.file.originalname.split('.')[1];
+    const fileName = req.task.title + req.headers.taskid;
+    const extension = '.csv';
     if(extension !== 'csv') {
       res.status(400).json({'message': `File extension error: use .csv extension`});
       return false;

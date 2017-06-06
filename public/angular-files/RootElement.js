@@ -5,15 +5,18 @@ function rootComponentController() {
     
 }
 
-     module.controller('menuController', function($scope, dataFactory, $cookies){
+     module.controller('menuController', function($scope, dataFactory, $cookies, $location){
            $scope.dataFactory = dataFactory;
            
            $scope.logout = function(){
                $cookies.remove('token');
                $cookies.remove('email');
+               $cookies.remove('isAdmin');
                dataFactory.token = null;
                dataFactory.email = null;
                dataFactory.authenticated = false;
+               dataFactory.isAdmin = false;
+               $location.path('/register');
            }
            
      });
@@ -39,6 +42,11 @@ function rootComponentController() {
                 path: '/userbord',
                 name: 'Userbord',
                 component: 'userbord'
+            },
+            {
+                path: '/addtask',
+                name: 'Addtask',
+                component: 'addtask'
             },
             {
                 path: '/**',

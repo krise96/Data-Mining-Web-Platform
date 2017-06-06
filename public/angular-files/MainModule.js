@@ -1,11 +1,11 @@
 (function() {
-    var module = angular.module('MainModule', ['ngComponentRouter', 'ngCookies']);
+    var module = angular.module('MainModule', ['ngComponentRouter', 'ngCookies', 'ngFileUpload']);
     
 	module.value('$routerRootComponent', 'rootElement');
     
 
     function getStatus(dataFactory, $location){
-        var mustBeAuthenticated = ['/userbord'];
+        var mustBeAuthenticated = ['/userbord', '/addtask'];
         var mustBeUnAuthenticated = ['/login', '/register', '/'];
         if(dataFactory.authenticated == false){
             if(mustBeAuthenticated.indexOf($location.path()) != -1){

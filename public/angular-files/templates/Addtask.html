@@ -5,9 +5,18 @@
         <h1>Додавання завдання</h1>
         <div class="col-md-5">
             <p>Назва завдання:</p>
-            <input type="text"></input>
+            <input type="text" ng-model="Addtask.title"></input>
             <p>Опис:</p>
-            <textarea></textarea>
+            <textarea ng-model="Addtask.description"></textarea>
+             <input 
+               type="file" 
+               ngf-select 
+               ng-model="Addtask.file" 
+               name="file" 
+               ngf-max-size="20MB" 
+               />
+                <button type="submit" ng-click="send()">Зберегти</button>
+                <p ng-show='errortaskshow'>Помилка заповнення</p>
         </div>
         <div class="col-md-5">
             

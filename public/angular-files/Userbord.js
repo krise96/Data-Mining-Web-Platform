@@ -3,7 +3,18 @@
     
     function UserBordController($scope, $http, dataFactory){
         $scope.dataFactory = dataFactory;
-       console.log(dataFactory);
+        $scope.activeTasks;
+        $scope.getActiveTasks = function (){
+            $http.get('/api/activeTasks')
+            .success(function(message){
+                $scope.activeTasks = message.message;
+                console.log(message.message);
+            })
+             .error(function (message) { 
+                console.log(message);
+            });
+        }
+         $scope.getActiveTasks();
     };
     
     

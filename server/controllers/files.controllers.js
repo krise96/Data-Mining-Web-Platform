@@ -29,7 +29,7 @@ exports.uploadFile = (req, res) => {
   uploadFile(req, res, err => {
     const fileName = req.task.title + req.headers.taskid;
     const extension = '.csv';
-    if(extension !== 'csv') {
+    if(extension !== '.csv') {
       res.status(400).json({'message': `File extension error: use .csv extension`});
       return false;
     } 

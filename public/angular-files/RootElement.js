@@ -49,6 +49,11 @@ function rootComponentController() {
                 component: 'addtask'
             },
             {
+                path: '/task/:id',
+                name: 'Task',
+                component: 'task'
+            },
+            {
                 path: '/**',
                 name: 'NotFound',
                 component: 'notFound'

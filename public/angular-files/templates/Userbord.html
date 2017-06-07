@@ -27,7 +27,10 @@
         <h3>Найцікавіші завдання</h3>
     </div>
     <div class="col-md-5 dashbordBlock">
-        <h3>Мої активні завдання</h3>
+        <h3>Aктивні завдання</h3>
+        <ul class="list-group"  >
+            <li class="list-group-item" ng-repeat="task in activeTasks"><a href="/#/task/?id={{task._id}}">{{task.title}}</a></li>
+        </ul>
     </div>
     <div class="col-md-1">
     </div>
